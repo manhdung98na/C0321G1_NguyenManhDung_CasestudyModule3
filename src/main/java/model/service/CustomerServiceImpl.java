@@ -32,4 +32,9 @@ public class CustomerServiceImpl implements CustomerService{
     public boolean deleteCustomer(int id) throws SQLException {
         return customerRepository.deleteCustomer(id);
     }
+
+    @Override
+    public List<Customer> selectByName(String name) {
+        return customerRepository.selectByName(name);
+    }
 }

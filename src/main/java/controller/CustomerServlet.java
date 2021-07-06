@@ -33,6 +33,10 @@ public class CustomerServlet extends HttpServlet {
                 break;
             case "edit":
                 editCustomer(request, response);
+                break;
+            case "search":
+                searchByName(request,response);
+                break;
             default:
                 showListCustomer(request, response);
                 break;
@@ -129,7 +133,7 @@ public class CustomerServlet extends HttpServlet {
                 request.setAttribute("status", "Cập nhật khách hàng thất bại");
                 request.setAttribute("colorHeader", "#d50005");
             }
-//            showListCustomer(request,response);
+            showListCustomer(request,response);
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             RequestDispatcher rd = request.getRequestDispatcher("view/customer/edit.jsp");
@@ -152,4 +156,14 @@ public class CustomerServlet extends HttpServlet {
             throwables.printStackTrace();
         }
     }
+
+
+    private void searchByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nameSearch = request.getParameter("nameSearch");
+        List<Customer> searchList = customerService.selectByName(nameSearch);
+        request.setAttribute("searchList", searchList);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/customer/search.jsp");
+        requestDispatcher.forward(request,response);
+    }
+
 }

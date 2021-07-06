@@ -20,7 +20,7 @@
 <div class="container">
     <div class="card mt-4">
         <div class="card-header">
-            <h3 style="color: #c41f00">Người dùng tìm kiếm theo Country</h3>
+            <h3 style="color: #c41f00">Tìm kiếm khách hàng theo tên</h3>
         </div>
         <div class="card-body">
             <c:if test="${empty searchList}">
@@ -31,24 +31,89 @@
             </c:if>
             <c:if test="${not empty searchList}">
             <div class="d-inline">
-                <h5 class="card-title d-inline-block">Danh sách người dùng</h5>
+                <h5 class="card-title d-inline-block">Danh sách khách hàng</h5>
             </div>
-            <table class="table align-middle table-striped table-bordered mt-4" id="">
+            <table class="table table-sm align-middle table-striped table-bordered mt-4" id="tableCustomer">
+                    <%--tiêu đề của bảng--%>
                 <thead class="p-0 table-dark w-100">
                 <tr class="">
                     <th class=" text-center">ID</th>
+                    <th class=" text-center">Type</th>
                     <th class=" text-center">Name</th>
+                    <th class=" text-center">Birthday</th>
+                    <th class=" text-center">Gender</th>
+                    <th class=" text-center">ID Card</th>
+                    <th class=" text-center">Phone</th>
                     <th class=" text-center">Email</th>
-                    <th class=" text-center">Country</th>
+                    <th class=" text-center">Address</th>
+                    <th class=" text-center ">Action</th>
                 </tr>
                 </thead>
+                    <%--danh sách người dùng--%>
                 <tbody>
-                <c:forEach items='${requestScope["searchList"]}' var="user">
+                <c:forEach items='${requestScope["searchList"]}' var="customer">
                     <tr class="">
-                        <td class=" text-center">${user.getId()}</td>
-                        <td class=" text-center">${user.getName()}</td>
-                        <td class=" text-center">${user.getEmail()}</td>
-                        <td class=" text-center">${user.getCountry()}</td>
+                        <td class=" text-center">${customer.getCustomerId()}</td>
+                        <td class=" text-center">${customer.getCustomerType()}</td>
+                        <td class=" text-center">${customer.getCustomerName()}</td>
+                        <td class=" text-center">${customer.getCustomerBirthday()}</td>
+                        <td class=" text-center">${customer.getCustomerGender()}</td>
+                        <td class=" text-center">${customer.getCustomerIdCard()}</td>
+                        <td class=" text-center">${customer.getCustomerPhone()}</td>
+                        <td class=" text-center">${customer.getCustomerEmail()}</td>
+                        <td class=" text-center">${customer.getCustomerAddress()}</td>
+                        <td class=" text-center">
+                            <a class="btn btn-info btn-sm" href="/customer?action=edit&id=${customer.getCustomerId()}"
+                               role="button">Edit</a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
+                                    data-target="#modalDel"
+                                    onclick="sendInfoToDelete(${customer.getCustomerId()},'${customer.getCustomerName()}')">
+                                Delete
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalDel" tabindex="-1" role="dialog"
+                                 aria-labelledby="modelTitleId" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Xác nhận xoá</h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <form action="/customer" method="get">
+                                            <input hidden name="action" value="delete">
+                                            <input hidden name="id" value="" id="idDelete">
+                                            <div class="modal-body">
+                                                <div class="container-fluid">
+                                                    Bạn muốn xoá
+                                                    <input id="nameConfirm" value=""
+                                                           style="border: none; outline:none; color: red"
+                                                           readonly>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                        data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                function sendInfoToDelete(id, name) {
+                                    document.getElementById("idDelete").value = id;
+                                    document.getElementById("nameConfirm").value = name + '?';
+
+                                }
+                            </script>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
@@ -56,7 +121,7 @@
         </div>
         </c:if>
         <div class="text-center w-100">
-            <a href="/users" type="button" class="btn btn-dark w-15 ">
+            <a href="/customer" type="button" class="btn btn-dark w-15 ">
                 Back
             </a>
         </div>

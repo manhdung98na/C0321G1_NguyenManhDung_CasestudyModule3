@@ -11,4 +11,5 @@ public interface CustomerService {
     public boolean updateCustomer(Customer customer) throws SQLException;
     public Customer selectById(int id);
     public boolean deleteCustomer(int id) throws SQLException;
+    public List<Customer> selectByName(String name);
 }
