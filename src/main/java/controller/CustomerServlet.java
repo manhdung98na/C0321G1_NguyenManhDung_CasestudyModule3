@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "CustomerServlet", urlPatterns = "/customer")
 public class CustomerServlet extends HttpServlet {
@@ -88,15 +89,17 @@ public class CustomerServlet extends HttpServlet {
             String customerEmail = request.getParameter("customer-email");
             String customerAddress = request.getParameter("customer-address");
             Customer newCustomer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
-            boolean isAddedSuccess = customerService.addCustomer(newCustomer);
-            if (isAddedSuccess) {
+            Map<String,String> mapError = customerService.addCustomer(newCustomer);
+            if (mapError.isEmpty()) {
                 request.setAttribute("status", customerName + " đã được tạo mới thành công");
                 request.setAttribute("colorHeader", "rgba(52,213,108,0.81)");
                 showListCustomer(request, response);
             } else {
-                request.setAttribute("error", "Kiểm tra lại định dạng và ID/ID Card/Phone/Email không được trùng lặp");
-                RequestDispatcher rd = request.getRequestDispatcher("view/customer/add.jsp");
-                rd.forward(request, response);
+                request.setAttribute("messName", mapError.get("nameError"));
+                request.setAttribute("messPhone", mapError.get("phoneError"));
+                request.setAttribute("messEmail", mapError.get("emailError"));
+                request.setAttribute("customer", newCustomer);
+                showAddForm(request,response);
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -125,15 +128,18 @@ public class CustomerServlet extends HttpServlet {
             String customerEmail = request.getParameter("customer-email");
             String customerAddress = request.getParameter("customer-address");
             Customer customerEdit = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
-            boolean isEditedSuccess = customerService.updateCustomer(customerEdit);
-            if (isEditedSuccess) {
-                request.setAttribute("status", customerName + " được cập nhật thành công");
+            Map<String, String> mapError = customerService.updateCustomer(customerEdit);
+            if (mapError.isEmpty()) {
+                request.setAttribute("status", customerName + " đã được cập nhật thành công");
                 request.setAttribute("colorHeader", "rgba(52,213,108,0.81)");
+                showListCustomer(request, response);
             } else {
-                request.setAttribute("status", "Cập nhật khách hàng thất bại");
-                request.setAttribute("colorHeader", "#d50005");
+                request.setAttribute("messName", mapError.get("nameError"));
+                request.setAttribute("messPhone", mapError.get("phoneError"));
+                request.setAttribute("messEmail", mapError.get("emailError"));
+                request.setAttribute("customer", customerEdit);
+                showEditForm(request,response);
             }
-            showListCustomer(request,response);
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
             RequestDispatcher rd = request.getRequestDispatcher("view/customer/edit.jsp");
@@ -161,6 +167,7 @@ public class CustomerServlet extends HttpServlet {
     private void searchByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nameSearch = request.getParameter("nameSearch");
         List<Customer> searchList = customerService.selectByName(nameSearch);
+        System.out.println(searchList);
         request.setAttribute("searchList", searchList);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/customer/search.jsp");
         requestDispatcher.forward(request,response);

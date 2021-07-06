@@ -60,7 +60,7 @@ CREATE TABLE employee (
     employee_address VARCHAR(45),
     position_id INT,
     education_degree_id INT,
-    devision_id INT,
+    division_id INT,
     username VARCHAR(255) UNIQUE,
     FOREIGN KEY (position_id)
         REFERENCES position (position_id)

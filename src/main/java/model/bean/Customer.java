@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Customer {
     private int customerId;
     private int customerType;
+    private String customerTypeName;
     private String customerName;
     private Date customerBirthday;
     private String customerGender;
@@ -13,9 +14,34 @@ public class Customer {
     private String customerEmail;
     private String customerAddress;
 
+    public Customer(int customerId, String customerTypeName, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
+        this.customerId = customerId;
+        this.customerTypeName = customerTypeName;
+        this.customerName = customerName;
+        this.customerBirthday = customerBirthday;
+        this.customerGender = customerGender;
+        this.customerIdCard = customerIdCard;
+        this.customerPhone = customerPhone;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+    }
+
     public Customer(int customerId, int customerType, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
         this.customerId = customerId;
         this.customerType = customerType;
+        this.customerName = customerName;
+        this.customerBirthday = customerBirthday;
+        this.customerGender = customerGender;
+        this.customerIdCard = customerIdCard;
+        this.customerPhone = customerPhone;
+        this.customerEmail = customerEmail;
+        this.customerAddress = customerAddress;
+    }
+
+    public Customer(int customerId, int customerType, String customerTypeName, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
+        this.customerId = customerId;
+        this.customerType = customerType;
+        this.customerTypeName = customerTypeName;
         this.customerName = customerName;
         this.customerBirthday = customerBirthday;
         this.customerGender = customerGender;
@@ -39,6 +65,14 @@ public class Customer {
 
     public void setCustomerType(int customerType) {
         this.customerType = customerType;
+    }
+
+    public String getCustomerTypeName() {
+        return customerTypeName;
+    }
+
+    public void setCustomerTypeName(String customerTypeName) {
+        this.customerTypeName = customerTypeName;
     }
 
     public String getCustomerName() {

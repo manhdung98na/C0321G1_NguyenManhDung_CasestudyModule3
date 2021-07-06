@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepositoryImpl implements CustomerRepository {
-    private static final String SELECT_ALL_CUSTOMER = "select * from customer";
+    private static final String SELECT_ALL_CUSTOMER = "select * from customer join customer_type ct on customer.customer_type_id = ct.customer_type_id";
     private static final String INSERT_CUSTOMER_SQL = "INSERT INTO customer VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE_CUSTOMER_SQL = "update customer set " +
             "customer_type_id = ?, customer_name = ?, customer_birthday = ?, customer_gender = ?," +
@@ -16,7 +16,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     private static final String SELECT_CUSTOMER_BY_ID = "select * from customer where customer_id = ?";
     private static final String DELETE_CUSTOMER_SQL = "delete from customer where customer_id = ?;";
 
-    private static final String SELECT_CUSTOMER_BY_NAME = "select * from customer where customer_name like ? order by customer_name";
+    private static final String SELECT_CUSTOMER_BY_NAME = "select * from customer join customer_type ct on customer.customer_type_id = ct.customer_type_id where customer_name like ? order by customer_name";
 
     @Override
     public List<Customer> selectAll() {
@@ -30,7 +30,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     int customerId = resultSet.getInt("customer_id");
-                    int customerType = resultSet.getInt("customer_type_id");
+                    String customerTypeName = resultSet.getString("customer_type_name");
                     String customerName = resultSet.getString("customer_name");
                     Date customerBirthday = resultSet.getDate("customer_birthday");
                     String customerGender = resultSet.getString("customer_gender");
@@ -38,7 +38,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                     String customerPhone = resultSet.getString("customer_phone");
                     String customerEmail = resultSet.getString("customer_email");
                     String customerAddress = resultSet.getString("customer_address");
-                    result.add(new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress));
+                    result.add(new Customer(customerId, customerTypeName, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress));
                 }
             } catch (SQLException e) {
                 printSQLException(e);
@@ -108,6 +108,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 while (resultSet.next()) {
                     int customerId = resultSet.getInt("customer_id");
                     int customerType = resultSet.getInt("customer_type_id");
+                    String customerTypeName = resultSet.getString("customer_type_name");
                     String customerName = resultSet.getString("customer_name");
                     Date customerBirthday = resultSet.getDate("customer_birthday");
                     String customerGender = resultSet.getString("customer_gender");
@@ -115,7 +116,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                     String customerPhone = resultSet.getString("customer_phone");
                     String customerEmail = resultSet.getString("customer_email");
                     String customerAddress = resultSet.getString("customer_address");
-                    list.add(new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress));
+                    list.add(new Customer(customerId, customerType, customerTypeName, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress));
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -206,7 +207,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             rowUpdated = statement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }finally {
+        } finally {
             statement.close();
             connection.close();
         }

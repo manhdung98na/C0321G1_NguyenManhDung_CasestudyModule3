@@ -17,142 +17,142 @@
 </head>
 <body>
 <div class="container">
-    <c:if test="${not empty requestScope['error']}">
-        <form method="get" action="/customer" class="text-center">
-            <input hidden name="action" value="">
-            <div class="alert alert-warning alert-dismissible fade show mt-4" role="alert">
-                <strong>Status</strong><br>
-                <span style="color: red; font-weight: bold; font-style: italic">${requestScope['error']}</span>
-                <button type="submit" class="close" aria-label="Close">
-                    <span style="text-decoration: none; font-size: 20px">x</span>
-                </button>
+    <form method="post" action="/customer" class="text-center">
+        <input hidden name="action" value="edit">
+        <h2 class="m-3">Thay đổi thông tin khách hàng</h2>
+        <table class="table table-borderless">
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editID" class="d-inline">ID</label>
+                    </td>
+                    <td>
+                        <input type="text" readonly class="form-control d-inline" id="editID" name="customer-id"
+                               value="${customer.getCustomerId()}">
+                    <td>
+                </tr>
             </div>
-        </form>
-    </c:if>
-    <c:if test="${empty requestScope['error']}">
-        <form method="post" action="/customer" class="text-center">
-            <input hidden name="action" value="edit">
-            <h2 class="m-3">Thay đổi thông tin khách hàng</h2>
-            <table class="table table-borderless">
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editID" class="d-inline">ID</label>
-                        </td>
-                        <td>
-                            <input type="text" readonly class="form-control d-inline" id="editID" name="customer-id"
-                                   value="${customer.getCustomerId()}">
-                        <td>
-                    </tr>
-                </div>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editType" class="d-inline">Customer type</label>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control d-inline" id="editType" name="customer-type"
-                                   value="${customer.getCustomerType()}">
-                        <td>
-                    </tr>
-                </div>
-                    <%--Edit Name--%>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editName" class="d-inline">Customer Name</label>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control d-inline" id="editName" name="customer-name"
-                                   value="${customer.getCustomerName()}">
-                        <td>
-                    </tr>
-                </div>
-                    <%--Edit Email--%>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editBirthday" class="d-inline">Birthday</label>
-                        </td>
-                        <td>
-                            <input type="date" class="form-control d-inline" id="editBirthday" name="customer-birthday"
-                                   value="${customer.getCustomerBirthday()}">
-                        <td>
-                    </tr>
-                </div>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label class="d-inline">Gender</label>
-                        </td>
-                        <td style="float: left">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="customer-gender" id="addGender1"
-                                       value="Male" ${customer.getCustomerGender() == 'Male' ? 'checked':''}>
-                                <label class="form-check-label" for="addGender1">Male</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="customer-gender" id="addGender2"
-                                       value="Female" ${customer.getCustomerGender() == 'Female' ? 'checked':''}>
-                                <label class="form-check-label" for="addGender2">Female</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="customer-gender" id="addGender3"
-                                       value="Unknown" ${customer.getCustomerGender() == 'Unknown' ? 'checked':''}>
-                                <label class="form-check-label" for="addGender3">Unknown</label>
-                            </div>
-                        <td>
-                    </tr>
-                </div>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editIdCard" class="d-inline">ID Card</label>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control d-inline" id="editIdCard" name="customer-id-card"
-                                   value="${customer.getCustomerIdCard()}">
-                        <td>
-                    </tr>
-                </div>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editPhone" class="d-inline">Phone</label>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control d-inline" id="editPhone" name="customer-phone"
-                                   value="${customer.getCustomerPhone()}">
-                        <td>
-                    </tr>
-                </div>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editEmail" class="d-inline">Email</label>
-                        </td>
-                        <td>
-                            <input type="email" class="form-control d-inline" id="editEmail" name="customer-email"
-                                   value="${customer.getCustomerEmail()}">
-                        <td>
-                    </tr>
-                </div>
-                <div class="form-group">
-                    <tr>
-                        <td>
-                            <label for="editAddress" class="d-inline">Address</label>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control d-inline" id="editAddress" name="customer-address"
-                                   value="${customer.getCustomerAddress()}">
-                        <td>
-                    </tr>
-                </div>
-            </table>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <a href="/customer" type="button" class="btn btn-secondary">Back</a>
-        </form>
-    </c:if>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editType" class="d-inline">Customer type</label>
+                    </td>
+                    <td>
+                        <select class="form-control d-inline" id="editType" name="customer-type">
+                            <option value="1" ${customer.getCustomerType() == 1 ? 'selected': ''}>Diamond</option>
+                            <option value="2" ${customer.getCustomerType() == 2 ? 'selected': ''}>Platinium</option>
+                            <option value="3" ${customer.getCustomerType() == 3 ? 'selected': ''}>Gold</option>
+                            <option value="4" ${customer.getCustomerType() == 4 ? 'selected': ''}>Silver</option>
+                            <option value="5" ${customer.getCustomerType() == 5 ? 'selected': ''}>Member</option>
+                        </select>
+                    <td>
+                </tr>
+            </div>
+            <%--Edit Name--%>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editName" class="d-inline">Customer Name</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control d-inline" id="editName" name="customer-name"
+                               value="${customer.getCustomerName()}" aria-describedby="name_stu" required>
+                        <c:if test="${messName != null}">
+                        <small id="name_stu" class="form-text text-danger">${messName}</small>
+                        </c:if>
+                    <td>
+                </tr>
+            </div>
+            <%--Edit Email--%>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editBirthday" class="d-inline">Birthday</label>
+                    </td>
+                    <td>
+                        <input type="date" class="form-control d-inline" id="editBirthday" name="customer-birthday"
+                               value="${customer.getCustomerBirthday()}">
+                    <td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label class="d-inline">Gender</label>
+                    </td>
+                    <td style="float: left">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="customer-gender" id="addGender1"
+                                   value="Male" ${customer.getCustomerGender() == 'Male' ? 'checked':''}>
+                            <label class="form-check-label" for="addGender1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="customer-gender" id="addGender2"
+                                   value="Female" ${customer.getCustomerGender() == 'Female' ? 'checked':''}>
+                            <label class="form-check-label" for="addGender2">Female</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="customer-gender" id="addGender3"
+                                   value="Unknown" ${customer.getCustomerGender() == 'Unknown' ? 'checked':''}>
+                            <label class="form-check-label" for="addGender3">Unknown</label>
+                        </div>
+                    <td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editIdCard" class="d-inline">ID Card</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control d-inline" id="editIdCard" name="customer-id-card"
+                               value="${customer.getCustomerIdCard()}">
+                    <td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editPhone" class="d-inline">Phone</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control d-inline" id="editPhone" name="customer-phone"
+                               value="${customer.getCustomerPhone()}" aria-describedby="phone_stu" required>
+                        <c:if test="${messPhone != null}">
+                        <small id="phone_stu" class="form-text text-danger">${messPhone}</small>
+                        </c:if>
+                    <td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editEmail" class="d-inline">Email</label>
+                    </td>
+                    <td>
+                        <input type="email" class="form-control d-inline" id="editEmail" name="customer-email"
+                               value="${customer.getCustomerEmail()}" aria-describedby="email_stu" required>
+                        <c:if test="${messEmail != null}">
+                        <small id="email_stu" class="form-text text-danger">${messEmail}</small>
+                        </c:if>
+                    <td>
+                </tr>
+            </div>
+            <div class="form-group">
+                <tr>
+                    <td>
+                        <label for="editAddress" class="d-inline">Address</label>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control d-inline" id="editAddress" name="customer-address"
+                               value="${customer.getCustomerAddress()}">
+                    <td>
+                </tr>
+            </div>
+        </table>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="/customer" type="button" class="btn btn-secondary">Back</a>
+    </form>
 </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
