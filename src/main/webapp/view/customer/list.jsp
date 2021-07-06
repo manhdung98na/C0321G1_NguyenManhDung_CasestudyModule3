@@ -92,10 +92,10 @@
             </thead>
                 <%--danh sách người dùng--%>
             <tbody>
-            <c:forEach items='${requestScope["list-customer"]}' var="customer">
+            <c:forEach items='${listcustomer}' var="customer">
                 <tr class="">
                     <td class=" text-center">${customer.getCustomerId()}</td>
-                    <td class=" text-center">${customer.getCustomerType()}</td>
+                    <td class=" text-center">${customer.getCustomerTypeName()}</td>
                     <td class=" text-center">${customer.getCustomerName()}</td>
                     <td class=" text-center">${customer.getCustomerBirthday()}</td>
                     <td class=" text-center">${customer.getCustomerGender()}</td>
