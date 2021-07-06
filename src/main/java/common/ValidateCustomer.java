@@ -25,7 +25,7 @@ public class ValidateCustomer {
     public static String validateIdCard(String idCard) {
         idCard = idCard.trim();
         String regex = "^([0-9]{9}|[0-9]{12})$";
-        return Pattern.matches(regex, idCard) ? null : "Invalid ID Card! Format: (12 digital characters)";
+        return Pattern.matches(regex, idCard) ? null : "Invalid ID Card! Format: (9 or 12 digital characters)";
     }
 
     public static String validateEmail(String email) {
