@@ -9,8 +9,8 @@ import java.util.Map;
 public interface CustomerService {
     public List<Customer> selectAll();
     public Map<String,String> addCustomer(Customer customer);
-    public Map<String,String> updateCustomer(Customer customer) throws SQLException;
-    public Customer selectById(int id);
-    public boolean deleteCustomer(int id) throws SQLException;
-    public List<Customer> selectByName(String name);
+    public Map<String,String> updateCustomer(Customer customer);
+    public Customer selectById(String id);
+    public boolean deleteCustomer(String id) throws SQLException;
+    public List<Customer> selectByName(String name) throws SQLException;
 }

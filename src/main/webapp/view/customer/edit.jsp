@@ -21,6 +21,9 @@
         <input hidden name="action" value="edit">
         <h2 class="m-3">Thay đổi thông tin khách hàng</h2>
         <table class="table table-borderless">
+            <c:if test="${messSQL != null}">
+                <p class="form-text text-danger">${messSQL}</p>
+            </c:if>
             <div class="form-group">
                 <tr>
                     <td>
@@ -28,7 +31,10 @@
                     </td>
                     <td>
                         <input type="text" readonly class="form-control d-inline" id="editID" name="customer-id"
-                               value="${customer.getCustomerId()}">
+                               value="${customer.getCustomerId()}" aria-describedby="id_stu">
+                        <c:if test="${messId != null}">
+                        <small id="id_stu" class="form-text text-danger">${messId}</small>
+                        </c:if>
                     <td>
                 </tr>
             </div>
@@ -106,7 +112,10 @@
                     </td>
                     <td>
                         <input type="text" class="form-control d-inline" id="editIdCard" name="customer-id-card"
-                               value="${customer.getCustomerIdCard()}">
+                               value="${customer.getCustomerIdCard()}" aria-describedby="idCard_stu" required>
+                        <c:if test="${messIdCard != null}">
+                        <small id="idCard_stu" class="form-text text-danger">${messIdCard}</small>
+                        </c:if>
                     <td>
                 </tr>
             </div>

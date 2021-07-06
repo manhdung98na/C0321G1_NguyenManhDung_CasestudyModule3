@@ -3,7 +3,7 @@ package model.bean;
 import java.sql.Date;
 
 public class Customer {
-    private int customerId;
+    private String customerId;
     private int customerType;
     private String customerTypeName;
     private String customerName;
@@ -14,7 +14,7 @@ public class Customer {
     private String customerEmail;
     private String customerAddress;
 
-    public Customer(int customerId, String customerTypeName, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
+    public Customer(String customerId, String customerTypeName, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
         this.customerId = customerId;
         this.customerTypeName = customerTypeName;
         this.customerName = customerName;
@@ -26,7 +26,7 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public Customer(int customerId, int customerType, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
+    public Customer(String customerId, int customerType, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
         this.customerId = customerId;
         this.customerType = customerType;
         this.customerName = customerName;
@@ -38,7 +38,7 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public Customer(int customerId, int customerType, String customerTypeName, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
+    public Customer(String customerId, int customerType, String customerTypeName, String customerName, Date customerBirthday, String customerGender, String customerIdCard, String customerPhone, String customerEmail, String customerAddress) {
         this.customerId = customerId;
         this.customerType = customerType;
         this.customerTypeName = customerTypeName;
@@ -51,11 +51,11 @@ public class Customer {
         this.customerAddress = customerAddress;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

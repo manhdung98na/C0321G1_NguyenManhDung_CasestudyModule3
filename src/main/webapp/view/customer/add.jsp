@@ -23,14 +23,20 @@
         <input hidden name="action" value="add">
         <h2 class="m-3">Add New Customer</h2>
         <table class="table table-borderless">
+            <c:if test="${messSQL != null}">
+                <p class="form-text text-danger">${messSQL}</p>
+            </c:if>
             <div class="form-group">
                 <tr>
                     <td>
                         <label for="addId" class="d-inline">ID</label>
                     </td>
                     <td>
-                        <input type="number" min="0" class="form-control d-inline" id="addId" name="customer-id"
-                               value="${customer.getCustomerId()}" required>
+                        <input type="text" min="0" class="form-control d-inline" id="addId" name="customer-id"
+                               value="${customer.getCustomerId()}" aria-describedby="id_stu" required>
+                        <c:if test="${messId != null}">
+                        <small id="id_stu" class="form-text text-danger">${messId}</small>
+                        </c:if>
                     <td>
                 </tr>
             </div>
@@ -106,7 +112,10 @@
                     </td>
                     <td>
                         <input type="text" class="form-control d-inline" id="addIdCard" name="customer-id-card"
-                              value="${customer.getCustomerIdCard()}" required>
+                              value="${customer.getCustomerIdCard()}" aria-describedby="idCard_stu" required>
+                        <c:if test="${messIdCard != null}">
+                        <small id="idCard_stu" class="form-text text-danger">${messIdCard}</small>
+                        </c:if>
                     <td>
                 </tr>
             </div>

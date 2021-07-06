@@ -68,8 +68,8 @@ CREATE TABLE employee (
     FOREIGN KEY (education_degree_id)
         REFERENCES education_degree (education_degree_id)
         ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (devision_id)
-        REFERENCES devision (devision_id)
+    FOREIGN KEY (division_id)
+        REFERENCES division (division_id)
         ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY (username)
         REFERENCES `user` (username)
@@ -77,7 +77,7 @@ CREATE TABLE employee (
 );
 
 CREATE TABLE customer (
-    customer_id INT PRIMARY KEY,
+    customer_id VARCHAR(15) PRIMARY KEY,
     customer_type_id INT,
     customer_name VARCHAR(45),
     customer_birthday DATE,
@@ -92,7 +92,7 @@ CREATE TABLE customer (
 );
 
 CREATE TABLE service (
-    service_id INT PRIMARY KEY,
+    service_id VARCHAR(15) PRIMARY KEY,
     service_name VARCHAR(45),
     service_area INT CHECK (service_area > 0),
     service_cost DOUBLE,
@@ -118,8 +118,8 @@ CREATE TABLE contract (
     contract_deposit DOUBLE,
     contract_total_money DOUBLE,
     employee_id INT,
-    customer_id INT,
-    service_id INT,
+    customer_id VARCHAR(15),
+    service_id VARCHAR(15),
     FOREIGN KEY (employee_id)
         REFERENCES employee (employee_id)
         ON UPDATE CASCADE ON DELETE CASCADE,
@@ -156,7 +156,7 @@ insert into attach_service value(1, 'massage', 500000, 1, 'available'),
 								(4, 'nước uống', 20000, 1, 'available'),
 								(5, 'thuê xe di chuyển tham quan resort', 250000, 1, 'available');
 insert into service_type value (1, 'Villa'), (2, 'House'), (3, 'Room');
-insert into customer value (1, 1, 'Mạnh Dũng', '1998-10-12', 'Male', '123123111', '0949470470', 'mdung@gmail.com', 'Nghệ An'),
-(2, 4, 'Bảo Hoàng', '2000-02-08', 'Male', '123123222', '0949470123', 'bhoang@gmail.com', 'Huế'),
-(3, 2, 'Lê Ly', '1996-05-11', 'Female', '123123333', '0949470704', 'lly@gmail.com', 'Đà Nẵng'),
-(4, 5, 'Phạm Toàn', '1999-12-22', 'Unknown', '123123444', '0949470740', 'ptoan@gmail.com', 'Quảng Nam');
+insert into customer value ('KH-0001', 1, 'Mạnh Dũng', '1998-10-12', 'Male', '123123111', '0949470470', 'mdung@gmail.com', 'Nghệ An'),
+('KH-0002', 4, 'Bảo Hoàng', '2000-02-08', 'Male', '123123222', '0949470123', 'bhoang@gmail.com', 'Huế'),
+('KH-0003', 2, 'Lê Ly', '1996-05-11', 'Female', '123123333', '0949470704', 'lly@gmail.com', 'Đà Nẵng'),
+('KH-0004', 5, 'Phạm Toàn', '1999-12-22', 'Unknown', '123123444', '0949470740', 'ptoan@gmail.com', 'Quảng Nam');

@@ -36,7 +36,7 @@ public class CustomerServlet extends HttpServlet {
                 editCustomer(request, response);
                 break;
             case "search":
-                searchByName(request,response);
+                searchByName(request, response);
                 break;
             default:
                 showListCustomer(request, response);
@@ -79,7 +79,7 @@ public class CustomerServlet extends HttpServlet {
 
     private void addCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int customerId = Integer.parseInt(request.getParameter("customer-id"));
+            String customerId = request.getParameter("customer-id");
             int customerType = Integer.parseInt(request.getParameter("customer-type"));
             String customerName = request.getParameter("customer-name");
             Date customerBirthday = Date.valueOf(request.getParameter("customer-birthday"));
@@ -89,7 +89,7 @@ public class CustomerServlet extends HttpServlet {
             String customerEmail = request.getParameter("customer-email");
             String customerAddress = request.getParameter("customer-address");
             Customer newCustomer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
-            Map<String,String> mapError = customerService.addCustomer(newCustomer);
+            Map<String, String> mapError = customerService.addCustomer(newCustomer);
             if (mapError.isEmpty()) {
                 request.setAttribute("status", customerName + " đã được tạo mới thành công");
                 request.setAttribute("colorHeader", "rgba(52,213,108,0.81)");
@@ -98,8 +98,11 @@ public class CustomerServlet extends HttpServlet {
                 request.setAttribute("messName", mapError.get("nameError"));
                 request.setAttribute("messPhone", mapError.get("phoneError"));
                 request.setAttribute("messEmail", mapError.get("emailError"));
+                request.setAttribute("messId", mapError.get("idError"));
+                request.setAttribute("messIdCard", mapError.get("idCardError"));
+                request.setAttribute("messSQL", mapError.get("sqlError"));
                 request.setAttribute("customer", newCustomer);
-                showAddForm(request,response);
+                showAddForm(request, response);
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -109,7 +112,7 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        String id = request.getParameter("id");
         Customer customerEdit = customerService.selectById(id);
         RequestDispatcher dispatcher = request.getRequestDispatcher("view/customer/edit.jsp");
         request.setAttribute("customer", customerEdit);
@@ -118,7 +121,7 @@ public class CustomerServlet extends HttpServlet {
 
     private void editCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            int customerId = Integer.parseInt(request.getParameter("customer-id"));
+            String customerId = request.getParameter("customer-id");
             int customerType = Integer.parseInt(request.getParameter("customer-type"));
             String customerName = request.getParameter("customer-name");
             Date customerBirthday = Date.valueOf(request.getParameter("customer-birthday"));
@@ -137,8 +140,12 @@ public class CustomerServlet extends HttpServlet {
                 request.setAttribute("messName", mapError.get("nameError"));
                 request.setAttribute("messPhone", mapError.get("phoneError"));
                 request.setAttribute("messEmail", mapError.get("emailError"));
+                request.setAttribute("messId", mapError.get("idError"));
+                request.setAttribute("messIdCard", mapError.get("idCardError"));
+                request.setAttribute("messSQL", mapError.get("sqlError"));
                 request.setAttribute("customer", customerEdit);
-                showEditForm(request,response);
+                RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/customer/edit.jsp");
+                requestDispatcher.forward(request, response);
             }
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
@@ -149,15 +156,15 @@ public class CustomerServlet extends HttpServlet {
 
     private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) {
         try {
-            int id = Integer.parseInt(request.getParameter("id"));
+            String id = request.getParameter("id");
             if (customerService.deleteCustomer(id)) {
                 request.setAttribute("status", "Xoá khách hàng thành công");
                 request.setAttribute("colorHeader", "rgba(52,213,108,0.81)");
-            }else {
+            } else {
                 request.setAttribute("status", "Xoá khách hàng thất bại");
                 request.setAttribute("colorHeader", "#d50005");
             }
-            showListCustomer(request,response);
+            showListCustomer(request, response);
         } catch (SQLException | IOException | ServletException throwables) {
             throwables.printStackTrace();
         }
@@ -166,11 +173,17 @@ public class CustomerServlet extends HttpServlet {
 
     private void searchByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nameSearch = request.getParameter("nameSearch");
-        List<Customer> searchList = customerService.selectByName(nameSearch);
-        System.out.println(searchList);
-        request.setAttribute("searchList", searchList);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/customer/search.jsp");
-        requestDispatcher.forward(request,response);
+        List<Customer> searchList = null;
+        try {
+            searchList = customerService.selectByName(nameSearch);
+        } catch (SQLException e) {
+            request.setAttribute("messSQL", "Error");
+            System.out.println(e.getMessage());
+        } finally {
+            request.setAttribute("searchList", searchList);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("/view/customer/search.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
 }

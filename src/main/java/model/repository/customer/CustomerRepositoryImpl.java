@@ -29,7 +29,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 statement = connection.prepareStatement(SELECT_ALL_CUSTOMER);
                 resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    int customerId = resultSet.getInt("customer_id");
+                    String customerId = resultSet.getString("customer_id");
                     String customerTypeName = resultSet.getString("customer_type_name");
                     String customerName = resultSet.getString("customer_name");
                     Date customerBirthday = resultSet.getDate("customer_birthday");
@@ -56,7 +56,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public Customer selectById(int id) {
+    public Customer selectById(String id) {
         Customer customer = null;
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
@@ -64,10 +64,10 @@ public class CustomerRepositoryImpl implements CustomerRepository {
         if (connection != null) {
             try {
                 statement = connection.prepareStatement(SELECT_CUSTOMER_BY_ID);
-                statement.setInt(1, id);
+                statement.setString(1, id);
                 resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    int customerId = resultSet.getInt("customer_id");
+                    String customerId = resultSet.getString("customer_id");
                     int customerType = resultSet.getInt("customer_type_id");
                     String customerName = resultSet.getString("customer_name");
                     Date customerBirthday = resultSet.getDate("customer_birthday");
@@ -94,7 +94,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public List<Customer> selectByName(String name) {
+    public List<Customer> selectByName(String name) throws SQLException {
         List<Customer> list = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
@@ -106,7 +106,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 statement.setString(1, countryCondition);
                 resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    int customerId = resultSet.getInt("customer_id");
+                    String customerId = resultSet.getString("customer_id");
                     int customerType = resultSet.getInt("customer_type_id");
                     String customerTypeName = resultSet.getString("customer_type_name");
                     String customerName = resultSet.getString("customer_name");
@@ -120,6 +120,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 }
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
+                throw new SQLException(throwables);
             } finally {
                 try {
                     if (resultSet != null) {
@@ -136,17 +137,17 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean deleteCustomer(int id) throws SQLException {
+    public boolean deleteCustomer(String id) throws SQLException {
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         if (connection != null) {
             try {
                 statement = connection.prepareStatement(DELETE_CUSTOMER_SQL);
-                statement.setInt(1, id);
+                statement.setString(1, id);
                 statement.executeUpdate();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
-                return false;
+                throw new SQLException(throwables);
             } finally {
                 statement.close();
                 DBConnection.close();
@@ -157,13 +158,13 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
-    public boolean addCustomer(Customer customer) {
+    public boolean addCustomer(Customer customer) throws SQLException {
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         if (connection != null) {
             try {
                 statement = connection.prepareStatement(INSERT_CUSTOMER_SQL);
-                statement.setInt(1, customer.getCustomerId());
+                statement.setString(1, customer.getCustomerId());
                 statement.setInt(2, customer.getCustomerType());
                 statement.setString(3, customer.getCustomerName());
                 statement.setDate(4, customer.getCustomerBirthday());
@@ -175,7 +176,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
                 statement.executeUpdate();
             } catch (SQLException e) {
                 printSQLException(e);
-                return false;
+                throw new SQLException(e);
             } finally {
                 try {
                     statement.close();
@@ -203,10 +204,11 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             statement.setString(6, customer.getCustomerPhone());
             statement.setString(7, customer.getCustomerEmail());
             statement.setString(8, customer.getCustomerAddress());
-            statement.setInt(9, customer.getCustomerId());
+            statement.setString(9, customer.getCustomerId());
             rowUpdated = statement.executeUpdate() > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            throw new SQLException(throwables);
         } finally {
             statement.close();
             connection.close();

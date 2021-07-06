@@ -34,21 +34,21 @@
         </c:if>
         <c:if test="${not empty listcustomer}">
 
-<%--        <c:if test="${not empty status}">--%>
-<%--            <div class="toast" data-autohide="false"--%>
-<%--                 style="position: fixed; bottom: 15px; right: 15px; z-index: 1">--%>
-<%--                <div class="toast-header" style="background-color: ${requestScope['colorHeader']}">--%>
-<%--                    <strong class="mr-auto">Trạng thái</strong>--%>
-<%--                    <small>vừa xong</small>--%>
-<%--                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">--%>
-<%--                        <span aria-hidden="true">&times;</span>--%>
-<%--                    </button>--%>
-<%--                </div>--%>
-<%--                <div class="toast-body">--%>
-<%--                    <span style="color: red">${requestScope['status']}</span>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </c:if>--%>
+        <c:if test="${not empty status}">
+            <div class="toast" data-autohide="false"
+                 style="position: fixed; bottom: 15px; right: 15px; z-index: 1">
+                <div class="toast-header" style="background-color: ${requestScope['colorHeader']}">
+                    <strong class="mr-auto">Trạng thái</strong>
+                    <small>vừa xong</small>
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                    <span style="color: red">${requestScope['status']}</span>
+                </div>
+            </div>
+        </c:if>
 
             <%--Ô tìm kiếm--%>
         <div>
@@ -112,7 +112,7 @@
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
                                 data-target="#modalDel"
-                                onclick="sendInfoToDelete(${customer.getCustomerId()},'${customer.getCustomerName()}')">
+                                onclick="sendInfoToDelete('${customer.getCustomerId()}','${customer.getCustomerName()}')">
                             Delete
                         </button>
                         <!-- Modal -->
