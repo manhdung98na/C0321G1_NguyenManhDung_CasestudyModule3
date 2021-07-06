@@ -1,7 +1,7 @@
 package model.bean;
 
 public class Service {
-    private int id;
+    private String id;
     private String name;
     private int area;
     private double cost;
@@ -15,7 +15,7 @@ public class Service {
     private double poolArea;
     private int floor;
 
-    public Service(int id, String name, int area, double cost, int maxPeople, int rentTypeId, int serviceTypeId, String standardRoom, String descriptionConvenience, double poolArea, int floor) {
+    public Service(String id, String name, int area, double cost, int maxPeople, int rentTypeId, int serviceTypeId, String standardRoom, String descriptionConvenience, double poolArea, int floor) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -29,7 +29,7 @@ public class Service {
         this.floor = floor;
     }
 
-    public Service(int id, String name, int area, double cost, int maxPeople, String rentTypeName, String serviceTypeName, String standardRoom, String descriptionConvenience, double poolArea, int floor) {
+    public Service(String id, String name, int area, double cost, int maxPeople, String rentTypeName, String serviceTypeName, String standardRoom, String descriptionConvenience, double poolArea, int floor) {
         this.id = id;
         this.name = name;
         this.area = area;
@@ -43,11 +43,27 @@ public class Service {
         this.floor = floor;
     }
 
-    public int getId() {
+    public Service(String id, String name, int area, double cost, int maxPeople, int rentTypeId, String rentTypeName, int serviceTypeId, String serviceTypeName, String standardRoom, String descriptionConvenience, double poolArea, int floor) {
+        this.id = id;
+        this.name = name;
+        this.area = area;
+        this.cost = cost;
+        this.maxPeople = maxPeople;
+        this.rentTypeId = rentTypeId;
+        this.rentTypeName = rentTypeName;
+        this.serviceTypeId = serviceTypeId;
+        this.serviceTypeName = serviceTypeName;
+        this.standardRoom = standardRoom;
+        this.descriptionConvenience = descriptionConvenience;
+        this.poolArea = poolArea;
+        this.floor = floor;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

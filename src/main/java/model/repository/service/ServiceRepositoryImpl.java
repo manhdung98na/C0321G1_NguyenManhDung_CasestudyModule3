@@ -1,6 +1,5 @@
 package model.repository.service;
 
-import model.bean.Customer;
 import model.bean.Service;
 import model.repository.DBConnection;
 
@@ -11,7 +10,7 @@ import java.util.List;
 public class ServiceRepositoryImpl implements ServiceRepository {
     private static final String SELECT_ALL_SERVICE =
             "select service_id, service_name, service_area, service_cost, service_max_people, rt.rent_type_name, st.service_type_name, standard_room, description_other_convenience, pool_area, number_of_floors " +
-            "from service s join service_type st on s.service_type_id = st.service_type_id " +
+                    "from service s join service_type st on s.service_type_id = st.service_type_id " +
                     "join rent_type rt on s.rent_type_id = rt.rent_type_id";
     private static final String INSERT_SERVICE_SQL = "INSERT INTO service VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 //    private static final String UPDATE_CUSTOMER_SQL = "update customer set " +
@@ -32,7 +31,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 statement = connection.prepareStatement(SELECT_ALL_SERVICE);
                 resultSet = statement.executeQuery();
                 while (resultSet.next()) {
-                    int id = resultSet.getInt("service_id");
+                    String id = resultSet.getString("service_id");
                     String name = resultSet.getString("service_name");
                     int area = resultSet.getInt("service_area");
                     double cost = resultSet.getDouble("service_cost");
@@ -51,8 +50,10 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 try {
                     if (resultSet != null) {
                         resultSet.close();
-                    } else System.out.println("resultSet null");
-                    statement.close();
+                    }
+                    if (statement != null) {
+                        statement.close();
+                    }
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
@@ -63,13 +64,13 @@ public class ServiceRepositoryImpl implements ServiceRepository {
     }
 
     @Override
-    public boolean addService(Service service) {
+    public boolean addService(Service service) throws SQLException {
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         if (connection != null) {
             try {
                 statement = connection.prepareStatement(INSERT_SERVICE_SQL);
-                statement.setInt(1, service.getId());
+                statement.setString(1, service.getId());
                 statement.setString(2, service.getName());
                 statement.setInt(3, service.getArea());
                 statement.setDouble(4, service.getCost());
@@ -83,7 +84,7 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                 statement.executeUpdate();
             } catch (SQLException e) {
                 printSQLException(e);
-                return false;
+                throw new SQLException(e);
             } finally {
                 try {
                     statement.close();
