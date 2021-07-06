@@ -14,7 +14,7 @@
     <style>
     </style>
 </head>
-<body onload="customer()">
+<body>
 <div class="container-fluid">
     <%--    Logo--%>
     <div class="row" style="background-color: #f8f9fa; height: 50px">
@@ -85,9 +85,4 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
-<script>
-    function customer() {
-        location.href = "/customer";
-    }
-</script>
 </html>
