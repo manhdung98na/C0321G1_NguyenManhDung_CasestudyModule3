@@ -24,13 +24,13 @@ public class ValidateCustomer {
 
     public static String validateIdCard(String idCard) {
         idCard = idCard.trim();
-        String regex = "^[0-9]{12}$";
+        String regex = "^([0-9]{9}|[0-9]{12})$";
         return Pattern.matches(regex, idCard) ? null : "Invalid ID Card! Format: (12 digital characters)";
     }
 
     public static String validateEmail(String email) {
         email = email.trim();
-        String regex = "^\\w+.*@[a-zA-Z]+\\.[a-zA-Z]+$";
+        String regex = "^\\w+([._]*\\w+)*@[a-zA-Z]+(\\.[a-zA-Z]+)+$";
         return Pattern.matches(regex, email) ? null : "Invalid email! Format: abc@xyz.zyt";
     }
 
