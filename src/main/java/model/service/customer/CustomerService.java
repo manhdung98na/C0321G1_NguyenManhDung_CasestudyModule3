@@ -1,4 +1,4 @@
-package model.service;
+package model.service.customer;
 
 import model.bean.Customer;
 

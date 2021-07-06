@@ -1,6 +1,7 @@
-package model.repository;
+package model.repository.customer;
 
 import model.bean.Customer;
+import model.repository.DBConnection;
 
 import java.sql.*;
 import java.util.ArrayList;

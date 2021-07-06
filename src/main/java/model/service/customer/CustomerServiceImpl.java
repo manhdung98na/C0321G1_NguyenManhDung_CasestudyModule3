@@ -1,7 +1,7 @@
-package model.service;
+package model.service.customer;
 
 import model.bean.Customer;
-import model.repository.CustomerRepositoryImpl;
+import model.repository.customer.CustomerRepositoryImpl;
 
 import java.sql.SQLException;
 import java.util.List;

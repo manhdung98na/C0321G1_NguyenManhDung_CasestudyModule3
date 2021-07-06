@@ -1,7 +1,7 @@
 package controller;
 
 import model.bean.Customer;
-import model.service.CustomerServiceImpl;
+import model.service.customer.CustomerServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -66,7 +66,7 @@ public class CustomerServlet extends HttpServlet {
 
     private void showListCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Customer> list = customerService.selectAll();
-        request.setAttribute("list-customer", list);
+        request.setAttribute("listcustomer", list);
         RequestDispatcher dispatcher = request.getRequestDispatcher("view/customer/list.jsp");
         dispatcher.forward(request, response);
     }
