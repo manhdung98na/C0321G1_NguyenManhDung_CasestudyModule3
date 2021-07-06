@@ -23,13 +23,13 @@
             <h3 style="color: #c41f00">Danh sách khách hàng</h3>
         </div>
         <div class="card-body">
-            <c:if test="${empty 'list-customer'}">
+            <c:if test="${empty listcustomer}">
                 <div class="d-block">
                         <%--Hiển thị danh sách--%>
                     <h5 class="card-title d-inline-block">Danh sách rỗng</h5>
                 </div>
             </c:if>
-            <c:if test="${not empty 'list-customer'}">
+            <c:if test="${not empty listcustomer}">
             <c:if test="${not empty status}">
                 <div class="toast" data-autohide="false"
                      style="position: fixed; bottom: 15px; right: 15px; z-index: 1">
