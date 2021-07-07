@@ -13,19 +13,19 @@ public class DBConnection {
 
     private static Connection connection;
 
-    public static Connection getConnection () {
+    public static Connection getConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://"+HOST+":"+PORT+"/"+DATABASE, USER_NAME, PASSWORD);
+            connection = DriverManager.getConnection("jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE, USER_NAME, PASSWORD);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return connection;
     }
 
-    public static void close(){
+    public static void close() {
         try {
-            if(connection != null){
+            if (connection != null) {
                 connection.close();
             }
         } catch (SQLException throwables) {

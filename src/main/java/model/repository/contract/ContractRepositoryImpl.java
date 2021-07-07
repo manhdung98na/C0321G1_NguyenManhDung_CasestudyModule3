@@ -37,7 +37,7 @@ public class ContractRepositoryImpl implements ContractRepository {
                     String customerName = resultSet.getString("customer_name");
                     String serviceId = resultSet.getString("service_id");
                     String serviceName = resultSet.getString("service_name");
-                    result.add(new Contract(id, startDate, endDate, deposit, totalMoney, employeeId, employeeName, custommerId, customerName,serviceId,serviceName));
+                    result.add(new Contract(id, startDate, endDate, deposit, totalMoney, employeeId, employeeName, custommerId, customerName, serviceId, serviceName));
                 }
             } catch (SQLException e) {
                 printSQLException(e);

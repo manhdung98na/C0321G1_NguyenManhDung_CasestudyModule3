@@ -1,6 +1,5 @@
 package model.repository.employee;
 
-import model.bean.Customer;
 import model.bean.Employee;
 
 import java.sql.SQLException;

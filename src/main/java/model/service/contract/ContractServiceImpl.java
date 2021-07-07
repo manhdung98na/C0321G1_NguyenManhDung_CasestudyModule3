@@ -1,9 +1,8 @@
 package model.service.contract;
 
-import common.ValidateContract;
-import common.ValidateCustomer;
 import model.bean.Contract;
 import model.repository.contract.ContractRepositoryImpl;
+import model.service.common.ValidateContract;
 
 import java.sql.SQLException;
 import java.util.HashMap;

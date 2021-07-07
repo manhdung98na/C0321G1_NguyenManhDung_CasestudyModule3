@@ -1,7 +1,6 @@
 package controller;
 
 import model.bean.Contract;
-import model.bean.Customer;
 import model.service.contract.ContractServiceImpl;
 
 import javax.servlet.RequestDispatcher;
@@ -90,7 +89,7 @@ public class ContractServlet extends HttpServlet {
                 request.setAttribute("messTime", mapError.get("timeError"));
                 request.setAttribute("messSQL", mapError.get("sqlError"));
                 request.setAttribute("contract", contract);
-                showAddForm(request,response);
+                showAddForm(request, response);
             }
         } catch (Exception e) {
             request.setAttribute("messSQL", "Dữ liệu nhập vào không hợp lệ! Không đúng định dạng");

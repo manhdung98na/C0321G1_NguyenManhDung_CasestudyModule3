@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     public Map<String, String> addEmployee(Employee employee);
 
-    public Map<String,String> updateEmployee(Employee employee);
+    public Map<String, String> updateEmployee(Employee employee);
 
     public Employee selectById(int id);
 

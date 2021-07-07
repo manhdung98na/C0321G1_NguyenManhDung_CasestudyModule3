@@ -1,8 +1,8 @@
 package model.service.customer;
 
-import common.ValidateCustomer;
 import model.bean.Customer;
 import model.repository.customer.CustomerRepositoryImpl;
+import model.service.common.ValidateCustomer;
 
 import java.sql.SQLException;
 import java.util.HashMap;

@@ -1,6 +1,5 @@
 package controller;
 
-import model.bean.Customer;
 import model.bean.Employee;
 import model.service.employee.EmployeeServiceImpl;
 
@@ -38,7 +37,7 @@ public class EmployeeServlet extends HttpServlet {
                 editEmployee(request, response);
                 break;
             case "search":
-                searchEmployeeByName(request,response);
+                searchEmployeeByName(request, response);
                 break;
             default:
                 showListEmployee(request, response);
@@ -59,7 +58,7 @@ public class EmployeeServlet extends HttpServlet {
                 showEditForm(request, response);
                 break;
             case "delete":
-                deleteEmployee(request,response);
+                deleteEmployee(request, response);
                 break;
             default:
                 showListEmployee(request, response);
@@ -109,7 +108,7 @@ public class EmployeeServlet extends HttpServlet {
             }
         } catch (Exception e) {
             request.setAttribute("messSQL", "Dữ liệu nhập vào không hợp lệ! Không đúng định dạng");
-            RequestDispatcher rd = request.getRequestDispatcher("view/customer/add.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("view/employee/add.jsp");
             rd.forward(request, response);
         }
     }
@@ -153,7 +152,7 @@ public class EmployeeServlet extends HttpServlet {
             }
         } catch (Exception e) {
             request.setAttribute("messSQL", "Dữ liệu nhập vào không hợp lệ! Không đúng định dạng");
-            RequestDispatcher rd = request.getRequestDispatcher("view/customer/edit.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("view/employee/edit.jsp");
             rd.forward(request, response);
         }
     }

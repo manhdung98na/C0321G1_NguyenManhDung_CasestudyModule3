@@ -1,8 +1,8 @@
 package model.service.service;
 
-import common.ValidateService;
 import model.bean.Service;
 import model.repository.service.ServiceRepositoryImpl;
+import model.service.common.ValidateService;
 
 import java.sql.SQLException;
 import java.util.HashMap;
