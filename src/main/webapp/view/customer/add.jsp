@@ -28,7 +28,7 @@
             </c:if>
             <div class="form-group">
                 <tr>
-                    <td>
+                    <td width="30%">
                         <label for="addId" class="d-inline">ID</label>
                     </td>
                     <td>
