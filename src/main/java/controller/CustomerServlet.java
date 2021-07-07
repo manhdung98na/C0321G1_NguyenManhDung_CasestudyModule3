@@ -105,7 +105,7 @@ public class CustomerServlet extends HttpServlet {
                 showAddForm(request, response);
             }
         } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
+            request.setAttribute("mesSQL", "Dữ liệu nhập vào không hợp lệ! Không đúng định dạng");
             RequestDispatcher rd = request.getRequestDispatcher("view/customer/add.jsp");
             rd.forward(request, response);
         }
@@ -148,7 +148,7 @@ public class CustomerServlet extends HttpServlet {
                 requestDispatcher.forward(request, response);
             }
         } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
+            request.setAttribute("messSQL", "Dữ liệu nhập vào không hợp lệ! Không đúng định dạng");
             RequestDispatcher rd = request.getRequestDispatcher("view/customer/edit.jsp");
             rd.forward(request, response);
         }
