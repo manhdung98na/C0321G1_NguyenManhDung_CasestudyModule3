@@ -24,7 +24,7 @@
             <jsp:include page="view/layoutt/left_content.jsp"></jsp:include>
         </div>
         <div class="col-10">
-            <h3>Casestudy Module 3: Furama Resort</h3>
+            <h3 style="line-height: 75vh; text-align: center">Casestudy Module 3: Furama Resort</h3>
         </div>
     </div>
 </div>
