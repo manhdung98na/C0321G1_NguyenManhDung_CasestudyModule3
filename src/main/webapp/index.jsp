@@ -24,7 +24,72 @@
             <jsp:include page="view/layoutt/left_content.jsp"></jsp:include>
         </div>
         <div class="col-10">
-            <h3 style="line-height: 75vh; text-align: center">Casestudy Module 3: Furama Resort</h3>
+<%--            BODY--%>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 style="color: #c41f00">Danh sách khách hàng đang sử dụng dịch vụ tại Resort</h3>
+                </div>
+                <div class="card-body">
+                    <c:if test="${empty listcustomer}">
+                    <div class="d-block">
+                            <%--Hiển thị danh sách--%>
+                        <h5 class="card-title d-inline-block">Không có khách hàng nào đang sử dụng dịch vụ</h5>
+                    </div>
+                </c:if>
+                <c:if test="${not empty listcustomer}">
+<%--                    &lt;%&ndash;Ô tìm kiếm&ndash;%&gt;--%>
+<%--                    <div>--%>
+<%--                        <div class="search-box">--%>
+<%--                            <form class="search-form  d-flex" action="/customer" method="post">--%>
+<%--                                <div class="input-group mb-3">--%>
+<%--                                    <input type="text" class="form-control" name="nameSearch"--%>
+<%--                                           placeholder="Tìm kiếm theo tên"--%>
+<%--                                           aria-label="Tìm kiếm theo tên" aria-describedby="button-addon2"--%>
+<%--                                           onkeypress="activeBtnSearch()">--%>
+<%--                                    <div class="input-group-prepend">--%>
+<%--                                        <input hidden name="action" value="search">--%>
+<%--                                        <button type="submit" class="btn btn-secondary" id="button-addon2" disabled>--%>
+<%--                                            <i class="fas fa-search"></i>--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </form>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                    <hr>--%>
+<%--                    <div class="d-inline">--%>
+                            <%--Hiển thị danh sách--%>
+<%--                        <h5 class="card-title d-inline-block">Danh sách khách hàng sử dụng dịch vụ</h5>--%>
+                    <%--Bảng danh sách--%>
+                    <table class="table table-sm align-middle table-striped table-bordered mt-4" id="tableCustomer">
+                            <%--tiêu đề của bảng--%>
+                        <thead class="p-0 table-dark w-100">
+                        <tr class="">
+                            <th class=" text-center">ID Customer</th>
+                            <th class=" text-center">Customer name</th>
+                            <th class=" text-center">ID Contract</th>
+                            <th class=" text-center">Start Date</th>
+                            <th class=" text-center">End Date</th>
+                            <th class=" text-center">Service Name</th>
+                            <th class=" text-center">Attach Service</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach items='${listcustomer}' var="customer">
+                            <tr class="">
+                                <td class=" text-center"><a href="#">${customer.idCustomer}</a></td>
+                                <td class=" text-center">${customer.nameCustomer}</td>
+                                <td class=" text-center"><a href="#">${customer.idContract}</a></td>
+                                <td class=" text-center">${customer.startDate}</td>
+                                <td class=" text-center">${customer.endDate}</td>
+                                <td class=" text-center"><a href="#">${customer.nameService}</a></td>
+                                <td class=" text-center">${customer.getStringAttachService()}</td>
+                            </tr>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </c:if>
+            </div>
         </div>
     </div>
 </div>
@@ -42,4 +107,13 @@
 <script src="assert/datatables/js/jquery.dataTables.min.js"></script>
 <script src="assert/datatables/js/dataTables.bootstrap4.min.js"></script>
 </body>
+<script>
+    $(document).ready(function () {
+        $('#tableCustomer').dataTable({
+            "dom": 'lrtip',
+            "lengthChange": false,
+            "pageLength": 5
+        });
+    });
+</script>
 </html>
