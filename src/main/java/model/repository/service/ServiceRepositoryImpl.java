@@ -16,11 +16,14 @@ public class ServiceRepositoryImpl implements ServiceRepository {
                     "from service s join service_type st on s.service_type_id = st.service_type_id " +
                     "join rent_type rt on s.rent_type_id = rt.rent_type_id";
     private static final String INSERT_SERVICE_SQL = "INSERT INTO service VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String SELECT_SERVICE_ID = "select service_id, service_name, service_area, service_cost, service_max_people, rt.rent_type_name, st.service_type_name, standard_room, description_other_convenience, pool_area, number_of_floors " +
+            "from service s join service_type st on s.service_type_id = st.service_type_id " +
+            "join rent_type rt on s.rent_type_id = rt.rent_type_id where service_id = ?";
+
 //    private static final String UPDATE_CUSTOMER_SQL = "update customer set " +
 //            "customer_type_id = ?, customer_name = ?, customer_birthday = ?, customer_gender = ?," +
-//            " customer_id_card= ?, customer_phone = ?, customer_email = ?,customer_address = ?  where customer_id = ?;";
-//    private static final String SELECT_CUSTOMER_BY_ID = "select * from customer where customer_id = ?";
-//    private static final String DELETE_CUSTOMER_SQL = "delete from customer where customer_id = ?;";
+//            " service_id_card= ?, customer_phone = ?, customer_email = ?,customer_address = ?  where service_id = ?;";
+//    private static final String DELETE_CUSTOMER_SQL = "delete from customer where service_id = ?;";
 //    private static final String SELECT_CUSTOMER_BY_NAME = "select * from customer where customer_name like ? order by service_name";
 
     @Override
@@ -98,6 +101,48 @@ public class ServiceRepositoryImpl implements ServiceRepository {
             }
         }
         return true;
+    }
+
+    @Override
+    public Service selectById(String id) {
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement(SELECT_SERVICE_ID);
+                statement.setString(1,id);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String name = resultSet.getString("service_name");
+                    int area = resultSet.getInt("service_area");
+                    double cost = resultSet.getDouble("service_cost");
+                    int maxPeople = resultSet.getInt("service_max_people");
+                    String rentType = resultSet.getString("rent_type_name");
+                    String serviceType = resultSet.getString("service_type_name");
+                    String standardRoom = resultSet.getString("standard_room");
+                    String descriptionConvenience = resultSet.getString("description_other_convenience");
+                    double poolArea = resultSet.getDouble("pool_area");
+                    int floor = resultSet.getInt("number_of_floors");
+                    return new Service(id, name, area, cost, maxPeople, rentType, serviceType, standardRoom, descriptionConvenience, poolArea, floor);
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            } finally {
+                try {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    }
+                    if (statement != null) {
+                        statement.close();
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                DBConnection.close();
+            }
+        }
+        return null;
     }
 
     private void printSQLException(SQLException ex) {

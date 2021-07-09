@@ -46,6 +46,9 @@ public class ServiceServlet extends HttpServlet {
             case "add":
                 showAddForm(request, response);
                 break;
+            case "detail":
+                showDetail(request, response);
+                break;
             default:
                 showListService(request, response);
                 break;
@@ -98,4 +101,13 @@ public class ServiceServlet extends HttpServlet {
             rd.forward(request, response);
         }
     }
+
+    private void showDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        Service service = resortService.selectById(id);
+        request.setAttribute("service", service);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/service/detail.jsp");
+        dispatcher.forward(request, response);
+    }
+
 }

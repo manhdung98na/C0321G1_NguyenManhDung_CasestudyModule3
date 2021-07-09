@@ -9,4 +9,6 @@ public interface ResortService {
     public List<Service> selectAll();
 
     public Map<String, String> addService(Service service);
+
+    public Service selectById(String id);
 }

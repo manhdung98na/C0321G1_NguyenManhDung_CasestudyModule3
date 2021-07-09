@@ -37,4 +37,9 @@ public class ContractServiceImpl implements ContractService {
         }
         return mapError;
     }
+
+    @Override
+    public Contract selectById(int id) {
+        return repository.selectById(id);
+    }
 }

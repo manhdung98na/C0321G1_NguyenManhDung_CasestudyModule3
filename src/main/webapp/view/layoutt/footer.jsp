@@ -12,8 +12,10 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row p-0 m-0" style="background-color: #cbcccd; justify-content: center; height: 30px">
-        <small class="text-justify">Casestudy Module for JSP & Servlet: Furama Resort- C0321G1 - Nguyễn Mạnh Dũng</small>
+    <div class="row p-0 mt-3" style="background-color: #cbcccd; justify-content: center; height: 30px">
+        <small class="text-justify" style="line-height: 30px">
+            Casestudy Module for JSP & Servlet: Furama Resort &nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp; C0321G1-NguyễnMạnhDũng
+        </small>
     </div>
 </div>
 </body>

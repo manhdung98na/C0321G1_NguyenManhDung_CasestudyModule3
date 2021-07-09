@@ -47,6 +47,9 @@ public class ContractServlet extends HttpServlet {
             case "add":
                 showAddForm(request, response);
                 break;
+            case "detail":
+                showDetail(request,response);
+                break;
             default:
                 showList(request, response);
                 break;
@@ -96,5 +99,13 @@ public class ContractServlet extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("view/contract/add.jsp");
             rd.forward(request, response);
         }
+    }
+
+    private void showDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Contract contract = service.selectById(id);
+        request.setAttribute("contract", contract);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("view/contract/detail.jsp");
+        dispatcher.forward(request, response);
     }
 }

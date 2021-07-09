@@ -10,8 +10,21 @@ public class CustomerUsingService {
     private int idContract;
     private Date startDate;
     private Date endDate;
+    private String idService;
     private String nameService;
     private List<String> attactServiceName;
+
+    public CustomerUsingService(String idCustomer, String nameCustomer, int idContract, Date startDate, Date endDate, String idService, String nameService, String attactServiceName) {
+        this.idCustomer = idCustomer;
+        this.nameCustomer = nameCustomer;
+        this.idContract = idContract;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.idService = idService;
+        this.nameService = nameService;
+        this.attactServiceName = new ArrayList<>();
+        this.attactServiceName.add(attactServiceName);
+    }
 
     public CustomerUsingService(String idCustomer, String nameCustomer, int idContract, Date startDate, Date endDate, String nameService, String attactServiceName) {
         this.idCustomer = idCustomer;
@@ -92,5 +105,13 @@ public class CustomerUsingService {
 
     public void setAttactServiceName(List<String> attactServiceName) {
         this.attactServiceName = attactServiceName;
+    }
+
+    public String getIdService() {
+        return idService;
+    }
+
+    public void setIdService(String idService) {
+        this.idService = idService;
     }
 }

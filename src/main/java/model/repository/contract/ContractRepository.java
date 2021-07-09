@@ -12,7 +12,7 @@ public interface ContractRepository {
 
 //    public boolean updateContract(Contract contract) throws SQLException;
 
-//    public Contract selectById(String id);
+    public Contract selectById(int id);
 
 //    public boolean deleteContract(String id) throws SQLException;
 

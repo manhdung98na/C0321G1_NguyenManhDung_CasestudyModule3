@@ -12,7 +12,7 @@ public interface ContractService {
 
 //    public Map<String, String> updateContract(Contract contract);
 
-//    public Contract selectById(String id);
+    public Contract selectById(int id);
 
 //    public boolean deleteContract(String id) throws SQLException;
 

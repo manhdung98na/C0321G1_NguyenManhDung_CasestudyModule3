@@ -14,6 +14,11 @@ public class ContractRepositoryImpl implements ContractRepository {
             " join customer c2 on c.customer_id = c2.customer_id" +
             " join service s on c.service_id = s.service_id";
     private static final String INSERT_CONTRACT_SQL = "INSERT INTO contract VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+    private static final String SELECT_CONTRACTBY_ID = "select " +
+            "contract_start_date, contract_end_date, contract_deposit, contract_total_money, c.employee_id, e.employee_name, c.customer_id, c2.customer_name, c.service_id, s.service_name" +
+            " from contract c join employee e on c.employee_id = e.employee_id" +
+            " join customer c2 on c.customer_id = c2.customer_id" +
+            " join service s on c.service_id = s.service_id where contract_id = ?";
 
     @Override
     public List<Contract> selectAll() {
@@ -87,6 +92,49 @@ public class ContractRepositoryImpl implements ContractRepository {
             }
         }
         return true;
+    }
+
+    @Override
+    public Contract selectById(int id) {
+        Contract contract;
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement(SELECT_CONTRACTBY_ID);
+                statement.setInt(1,id);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    Date startDate = resultSet.getDate("contract_start_date");
+                    Date endDate = resultSet.getDate("contract_end_date");
+                    double deposit = resultSet.getDouble("contract_deposit");
+                    double totalMoney = resultSet.getDouble("contract_total_money");
+                    int employeeId = resultSet.getInt("employee_id");
+                    String employeeName = resultSet.getString("employee_name");
+                    String custommerId = resultSet.getString("customer_id");
+                    String customerName = resultSet.getString("customer_name");
+                    String serviceId = resultSet.getString("service_id");
+                    String serviceName = resultSet.getString("service_name");
+                    return new Contract(id, startDate, endDate, deposit, totalMoney, employeeId, employeeName, custommerId, customerName, serviceId, serviceName);
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            } finally {
+                try {
+                    if (resultSet != null) {
+                        resultSet.close();
+                    }
+                    if (statement != null) {
+                        statement.close();
+                    }
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                DBConnection.close();
+            }
+        }
+        return null;
     }
 
 

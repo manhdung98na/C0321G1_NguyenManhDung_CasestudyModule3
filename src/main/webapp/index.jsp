@@ -13,7 +13,6 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assert/datatables/css/dataTables.bootstrap4.min.css"/>
     <style>
-
     </style>
 </head>
 <body>
@@ -37,30 +36,6 @@
                     </div>
                 </c:if>
                 <c:if test="${not empty listcustomer}">
-<%--                    &lt;%&ndash;Ô tìm kiếm&ndash;%&gt;--%>
-<%--                    <div>--%>
-<%--                        <div class="search-box">--%>
-<%--                            <form class="search-form  d-flex" action="/customer" method="post">--%>
-<%--                                <div class="input-group mb-3">--%>
-<%--                                    <input type="text" class="form-control" name="nameSearch"--%>
-<%--                                           placeholder="Tìm kiếm theo tên"--%>
-<%--                                           aria-label="Tìm kiếm theo tên" aria-describedby="button-addon2"--%>
-<%--                                           onkeypress="activeBtnSearch()">--%>
-<%--                                    <div class="input-group-prepend">--%>
-<%--                                        <input hidden name="action" value="search">--%>
-<%--                                        <button type="submit" class="btn btn-secondary" id="button-addon2" disabled>--%>
-<%--                                            <i class="fas fa-search"></i>--%>
-<%--                                        </button>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </form>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <hr>--%>
-<%--                    <div class="d-inline">--%>
-                            <%--Hiển thị danh sách--%>
-<%--                        <h5 class="card-title d-inline-block">Danh sách khách hàng sử dụng dịch vụ</h5>--%>
-                    <%--Bảng danh sách--%>
                     <table class="table table-sm align-middle table-striped table-bordered mt-4" id="tableCustomer">
                             <%--tiêu đề của bảng--%>
                         <thead class="p-0 table-dark w-100">
@@ -77,12 +52,12 @@
                         <tbody>
                         <c:forEach items='${listcustomer}' var="customer">
                             <tr class="">
-                                <td class=" text-center"><a href="#">${customer.idCustomer}</a></td>
+                                <td class=" text-center"><a href="/customer?action=detail&id=${customer.idCustomer}">${customer.idCustomer}</a></td>
                                 <td class=" text-center">${customer.nameCustomer}</td>
-                                <td class=" text-center"><a href="#">${customer.idContract}</a></td>
+                                <td class=" text-center"><a href="/contract?action=detail&id=${customer.idContract}">${customer.idContract}</a></td>
                                 <td class=" text-center">${customer.startDate}</td>
                                 <td class=" text-center">${customer.endDate}</td>
-                                <td class=" text-center"><a href="#">${customer.nameService}</a></td>
+                                <td class=" text-center"><a href="/service?action=detail&id=${customer.idService}">${customer.nameService}</a></td>
                                 <td class=" text-center">${customer.getStringAttachService()}</td>
                             </tr>
                         </c:forEach>

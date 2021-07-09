@@ -8,7 +8,7 @@ import java.util.List;
 
 public class HomepageRepository {
     private static final String SELECT = "select " +
-            "c.customer_id, customer_name, c2.contract_id, contract_start_date, contract_end_date, service_name, attach_service_name " +
+            "c.customer_id, customer_name, c2.contract_id, contract_start_date, contract_end_date, s.service_id, service_name, attach_service_name " +
             "from customer c " +
             "join contract c2 on c.customer_id = c2.customer_id " +
             "join service s on c2.service_id = s.service_id " +
@@ -24,7 +24,6 @@ public class HomepageRepository {
             try {
                 statement = connection.prepareStatement(SELECT);
                 rs = statement.executeQuery();
-                List<String> arrAttachSerivce = new ArrayList<>();
                 while (rs.next()) {
                     int idContract = rs.getInt("contract_id");
                     if (list.isEmpty()) {
@@ -32,9 +31,10 @@ public class HomepageRepository {
                         String nameCustomer = rs.getString("customer_name");
                         Date startDate = rs.getDate("contract_start_date");
                         Date endDate = rs.getDate("contract_end_date");
+                        String idService = rs.getString("service_id");
                         String nameService = rs.getString("service_name");
                         String attactServiceName = rs.getString("attach_service_name");
-                        CustomerUsingService customer = new CustomerUsingService(idCustomer, nameCustomer, idContract, startDate, endDate, nameService, attactServiceName);
+                        CustomerUsingService customer = new CustomerUsingService(idCustomer, nameCustomer, idContract, startDate, endDate, idService, nameService, attactServiceName);
                         list.add(customer);
                     } else {
                         boolean isExisted = false;
@@ -51,9 +51,10 @@ public class HomepageRepository {
                             String nameCustomer = rs.getString("customer_name");
                             Date startDate = rs.getDate("contract_start_date");
                             Date endDate = rs.getDate("contract_end_date");
+                            String idService = rs.getString("service_id");
                             String nameService = rs.getString("service_name");
                             String attactServiceName = rs.getString("attach_service_name");
-                            CustomerUsingService customer = new CustomerUsingService(idCustomer, nameCustomer, idContract, startDate, endDate, nameService, attactServiceName);
+                            CustomerUsingService customer = new CustomerUsingService(idCustomer, nameCustomer, idContract, startDate, endDate, idService, nameService, attactServiceName);
                             list.add(customer);
                         }
                     }

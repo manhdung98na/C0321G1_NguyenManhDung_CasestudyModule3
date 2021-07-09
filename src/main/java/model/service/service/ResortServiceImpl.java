@@ -34,4 +34,9 @@ public class ResortServiceImpl implements ResortService {
         }
         return mapError;
     }
+
+    @Override
+    public Service selectById(String id) {
+        return repository.selectById(id);
+    }
 }
