@@ -1,5 +1,6 @@
 package model.service.common;
 
+import java.time.LocalDate;
 import java.util.regex.Pattern;
 
 public class ValidateCustomer {
@@ -33,4 +34,23 @@ public class ValidateCustomer {
         return Pattern.matches(regex, email) ? null : "Invalid email! Format: abc@xyz.zyt";
     }
 
+    public static String validateBithday(String birthday) {
+        String[] dates = birthday.split("-");
+        String currentDate = LocalDate.now().toString();
+        String[] currentDateArr = currentDate.split("-");
+        if (Integer.parseInt(dates[0]) > Integer.parseInt(currentDateArr[0])) {
+            return "Birthday must be a day in the past!";
+        }
+        if (Integer.parseInt(dates[0]) == Integer.parseInt(currentDateArr[0])) {
+            if (Integer.parseInt(dates[1]) > Integer.parseInt(currentDateArr[1])) {
+                return "Birthday must be a day in the past!";
+            }
+            if (Integer.parseInt(dates[1]) == Integer.parseInt(currentDateArr[1])) {
+                if (Integer.parseInt(dates[2]) > Integer.parseInt(currentDateArr[2])) {
+                    return "Birthday must be a day in the past!";
+                }
+            }
+        }
+        return null;
+    }
 }

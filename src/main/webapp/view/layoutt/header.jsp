@@ -46,7 +46,5 @@
         </div>
     </div>
 </div>
-<script src="assert/datatables/js/jquery.dataTables.min.js"></script>
-<script src="assert/datatables/js/dataTables.bootstrap4.min.js"></script>
 </body>
 </html>

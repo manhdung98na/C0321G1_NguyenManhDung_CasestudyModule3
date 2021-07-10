@@ -62,6 +62,24 @@ public class CustomerServlet extends HttpServlet {
             case "detail":
                 showDetail(request, response);
                 break;
+            case "check_id":
+                checkId(request, response);
+                break;
+            case "check_name":
+                checkName(request, response);
+                break;
+            case "check_birthday":
+                checkBirthday(request, response);
+                break;
+            case "check_id_card":
+                checkIdCard(request, response);
+                break;
+            case "check_phone":
+                checkPhone(request, response);
+                break;
+            case "check_email":
+                checkEmail(request, response);
+                break;
             default:
                 showListCustomer(request, response);
                 break;
@@ -81,34 +99,24 @@ public class CustomerServlet extends HttpServlet {
     }
 
     private void addCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String customerId = request.getParameter("customer-id");
+        int customerType = Integer.parseInt(request.getParameter("customer-type"));
+        String customerName = request.getParameter("customer-name");
+        Date customerBirthday = Date.valueOf(request.getParameter("customer-birthday"));
+        String customerGender = request.getParameter("customer-gender");
+        String customerIdCard = request.getParameter("customer-id-card");
+        String customerPhone = request.getParameter("customer-phone");
+        String customerEmail = request.getParameter("customer-email");
+        String customerAddress = request.getParameter("customer-address");
+        Customer newCustomer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
         try {
-            String customerId = request.getParameter("customer-id");
-            int customerType = Integer.parseInt(request.getParameter("customer-type"));
-            String customerName = request.getParameter("customer-name");
-            Date customerBirthday = Date.valueOf(request.getParameter("customer-birthday"));
-            String customerGender = request.getParameter("customer-gender");
-            String customerIdCard = request.getParameter("customer-id-card");
-            String customerPhone = request.getParameter("customer-phone");
-            String customerEmail = request.getParameter("customer-email");
-            String customerAddress = request.getParameter("customer-address");
-            Customer newCustomer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
-            Map<String, String> mapError = customerService.addCustomer(newCustomer);
-            if (mapError.isEmpty()) {
-                request.setAttribute("status", customerName + " đã được tạo mới thành công");
-                request.setAttribute("colorHeader", "rgba(52,213,108,0.81)");
-                showListCustomer(request, response);
-            } else {
-                request.setAttribute("messName", mapError.get("nameError"));
-                request.setAttribute("messPhone", mapError.get("phoneError"));
-                request.setAttribute("messEmail", mapError.get("emailError"));
-                request.setAttribute("messId", mapError.get("idError"));
-                request.setAttribute("messIdCard", mapError.get("idCardError"));
-                request.setAttribute("messSQL", mapError.get("sqlError"));
-                request.setAttribute("customer", newCustomer);
-                showAddForm(request, response);
-            }
+            customerService.addCustomer(newCustomer);
+            request.setAttribute("status", customerName + " đã được tạo mới thành công");
+            request.setAttribute("colorHeader", "rgba(52,213,108,0.81)");
+            showListCustomer(request, response);
         } catch (Exception e) {
-            request.setAttribute("mesSQL", "Dữ liệu nhập vào không hợp lệ! Không đúng định dạng");
+            request.setAttribute("customer", newCustomer);
+            request.setAttribute("mesSQL", "Lỗi SQL!");
             RequestDispatcher rd = request.getRequestDispatcher("view/customer/add.jsp");
             rd.forward(request, response);
         }
@@ -194,5 +202,41 @@ public class CustomerServlet extends HttpServlet {
         request.setAttribute("customer", customer);
         RequestDispatcher dispatcher = request.getRequestDispatcher("view/customer/detail.jsp");
         dispatcher.forward(request, response);
+    }
+
+    private void checkId(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id_check");
+        response.setContentType("text/plain");
+        response.getWriter().write(customerService.validateId(id));
+    }
+
+    private void checkName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String name = request.getParameter("name_check");
+        response.setContentType("text/plain");
+        response.getWriter().write(customerService.validateName(name));
+    }
+
+    private void checkBirthday(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String birthday = (request.getParameter("birthday_check"));
+        response.setContentType("text/plain");
+        response.getWriter().write(customerService.validateBirthday(birthday));
+    }
+
+    private void checkIdCard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String idCard = request.getParameter("id_card_check");
+        response.setContentType("text/plain");
+        response.getWriter().write(customerService.validateIdCard(idCard));
+    }
+
+    private void checkPhone(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String phone = request.getParameter("phone_check");
+        response.setContentType("text/plain");
+        response.getWriter().write(customerService.validatePhone(phone));
+    }
+
+    private void checkEmail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email_check");
+        response.setContentType("text/plain");
+        response.getWriter().write(customerService.validateEmail(email));
     }
 }

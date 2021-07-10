@@ -33,14 +33,14 @@
                     <div class="form-group">
                         <tr>
                             <td width="30%">
-                                <label for="addId" class="d-inline">ID</label>
+                                <label for="idCustomer" class="d-inline">ID</label>
                             </td>
                             <td>
-                                <input type="text" min="0" class="form-control d-inline" id="addId" name="customer-id"
+                                <input type="text" min="0" class="form-control d-inline" id="idCustomer"
+                                       name="customer-id"
                                        value="${customer.getCustomerId()}" aria-describedby="id_stu" required>
-                                <c:if test="${messId != null}">
-                                <small id="id_stu" class="form-text text-danger">${messId}</small>
-                                </c:if>
+                                <input id="id_stu2" class="form-text text-danger border-0 bg-white d-block w-100"
+                                       style="font-size: smaller" value="" hidden disabled>
                             <td>
                         </tr>
                     </div>
@@ -72,9 +72,8 @@
                             <td>
                                 <input type="text" class="form-control d-inline" id="addName" name="customer-name"
                                        aria-describedby="name_stu" value="${customer.getCustomerName()}" required>
-                                <c:if test="${messName != null}">
-                                <small id="name_stu" class="form-text text-danger">${messName}</small>
-                                </c:if>
+                                <input id="name_stu" class="form-text text-danger border-0 bg-white d-block w-100"
+                                       style="font-size: smaller" value="" hidden disabled>
                             <td>
                         </tr>
                     </div>
@@ -87,6 +86,8 @@
                                 <input type="date" class="form-control d-inline" id="addBirthday"
                                        name="customer-birthday"
                                        value="${customer.getCustomerBirthday()}" required>
+                                <input id="birthday_stu" class="form-text text-danger border-0 bg-white d-block w-100"
+                                       style="font-size: smaller" value="" hidden disabled>
                             <td>
                         </tr>
                     </div>
@@ -98,7 +99,7 @@
                             <td style="float: left">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="customer-gender" id="addGender1"
-                                           value="Male" ${customer.getCustomerGender() == 'Male' ? 'checked' : ''}>
+                                           value="Male" ${customer.getCustomerGender() == 'Male' ? 'checked' : ''} checked="checked">
                                     <label class="form-check-label" for="addGender1">Male</label>
                                 </div>
                                 <div class="form-check form-check-inline">
@@ -122,9 +123,8 @@
                             <td>
                                 <input type="text" class="form-control d-inline" id="addIdCard" name="customer-id-card"
                                        value="${customer.getCustomerIdCard()}" aria-describedby="idCard_stu" required>
-                                <c:if test="${messIdCard != null}">
-                                <small id="idCard_stu" class="form-text text-danger">${messIdCard}</small>
-                                </c:if>
+                                <input id="id_card_stu" class="form-text text-danger border-0 bg-white d-block w-100"
+                                       style="font-size: smaller" value="" hidden disabled>
                             <td>
                         </tr>
                     </div>
@@ -136,9 +136,8 @@
                             <td>
                                 <input type="text" class="form-control d-inline" id="addPhone" name="customer-phone"
                                        aria-describedby="phone_stu" value="${customer.getCustomerPhone()}" required>
-                                <c:if test="${messPhone != null}">
-                                <small id="phone_stu" class="form-text text-danger">${messPhone}</small>
-                                </c:if>
+                                <input id="phone_stu" class="form-text text-danger border-0 bg-white d-block w-100"
+                                       style="font-size: smaller" value="" hidden disabled>
                             <td>
                         </tr>
                     </div>
@@ -150,9 +149,8 @@
                             <td>
                                 <input type="email" class="form-control d-inline" id="addEmail" name="customer-email"
                                        aria-describedby="email_stu" value="${customer.getCustomerEmail()}" required>
-                                <c:if test="${messEmail != null}">
-                                <small id="email_stu" class="form-text text-danger">${messEmail}</small>
-                                </c:if>
+                                <input id="email_stu" class="form-text text-danger border-0 bg-white d-block w-100"
+                                       style="font-size: smaller" value="" hidden disabled>
                             <td>
                         </tr>
                     </div>
@@ -169,16 +167,15 @@
                     </div>
                 </table>
                 <a href="/customer" type="button" class="btn btn-secondary">Back</a>
-                <button type="submit" class="btn btn-success">Submit</button>
+                <button type="submit" class="btn btn-success" disabled="false" id="btn_submit">Submit</button>
             </form>
         </div>
     </div>
 </div>
 <jsp:include page="../layoutt/footer.jsp"></jsp:include>
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
@@ -186,4 +183,150 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
+<script>
+    $(document).ready(function () {
+        $('#idCustomer').change(function () {
+            let id = $("#idCustomer").val();
+            console.log(id);
+            $.ajax({
+                url: 'customer',
+                data: {
+                    action: "check_id",
+                    id_check: id
+                },
+                success: function (responseText) {
+                    if (responseText != "") {
+                        document.getElementById("id_stu2").value = responseText;
+                        document.getElementById("id_stu2").hidden = false;
+                        document.getElementById("id_stu2").disabled = true;
+                        document.getElementById("btn_submit").disabled = true;
+                    }else {
+                        document.getElementById("id_stu2").value = "";
+                        document.getElementById("id_stu2").hidden = true;
+                        document.getElementById("btn_submit").disabled = false;
+                    }
+                }
+            });
+        });
+        $('#addName').change(function () {
+            let name = $("#addName").val();
+            console.log(name);
+            $.ajax({
+                url: 'customer',
+                data: {
+                    action: "check_name",
+                    name_check: name
+                },
+                success: function (responseText) {
+                    if (responseText != "") {
+                        document.getElementById("name_stu").value = responseText;
+                        document.getElementById("name_stu").hidden = false;
+                        document.getElementById("name_stu").disabled = true;
+                        document.getElementById("btn_submit").disabled = true;
+                    }else {
+                        document.getElementById("name_stu").value = "";
+                        document.getElementById("name_stu").hidden = true;
+                        document.getElementById("btn_submit").disabled = false;
+                    }
+                }
+            });
+        });
+
+        $('#addBirthday').change(function () {
+            let birthday = $("#addBirthday").val();
+            console.log(birthday);
+            $.ajax({
+                url: 'customer',
+                data: {
+                    action: "check_birthday",
+                    birthday_check: birthday
+                },
+                success: function (responseText) {
+                    if (responseText != "") {
+                        document.getElementById("birthday_stu").value = responseText;
+                        document.getElementById("birthday_stu").hidden = false;
+                        document.getElementById("birthday_stu").disabled = true;
+                        document.getElementById("btn_submit").disabled = true;
+                    }else {
+                        document.getElementById("birthday_stu").value = "";
+                        document.getElementById("birthday_stu").hidden = true;
+                        document.getElementById("btn_submit").disabled = false;
+                    }
+                }
+            });
+        });
+
+        $('#addIdCard').change(function () {
+            let idCard = $("#addIdCard").val();
+            console.log(idCard);
+            $.ajax({
+                url: 'customer',
+                data: {
+                    action: "check_id_card",
+                    id_card_check: idCard
+                },
+                success: function (responseText) {
+                    if (responseText != "") {
+                        document.getElementById("id_card_stu").value = responseText;
+                        document.getElementById("id_card_stu").hidden = false;
+                        document.getElementById("id_card_stu").disabled = true;
+                        document.getElementById("btn_submit").disabled = true;
+                    }else {
+                        document.getElementById("id_card_stu").value = "";
+                        document.getElementById("id_card_stu").hidden = true;
+                        document.getElementById("btn_submit").disabled = false;
+                    }
+                }
+            });
+        });
+
+        $('#addPhone').change(function () {
+            let phone = $("#addPhone").val();
+            console.log(phone);
+            $.ajax({
+                url: 'customer',
+                data: {
+                    action: "check_phone",
+                    phone_check: phone
+                },
+                success: function (responseText) {
+                    if (responseText != "") {
+                        document.getElementById("phone_stu").value = responseText;
+                        document.getElementById("phone_stu").hidden = false;
+                        document.getElementById("phone_stu").disabled = true;
+                        document.getElementById("btn_submit").disabled = true;
+                    }else {
+                        document.getElementById("phone_stu").value = "";
+                        document.getElementById("phone_stu").hidden = true;
+                        document.getElementById("btn_submit").disabled = false;
+                    }
+                }
+            });
+        });
+
+        $('#addEmail').change(function () {
+            let email = $("#addEmail").val();
+            console.log(email);
+            $.ajax({
+                url: 'customer',
+                data: {
+                    action: "check_email",
+                    email_check: email
+                },
+                success: function (responseText) {
+                    if (responseText != "") {
+                        document.getElementById("email_stu").value = responseText;
+                        document.getElementById("email_stu").hidden = false;
+                        document.getElementById("email_stu").disabled = true;
+                        document.getElementById("btn_submit").disabled = true;
+                    }else {
+                        document.getElementById("email_stu").value = "";
+                        document.getElementById("email_stu").hidden = true;
+                        document.getElementById("btn_submit").disabled = false;
+                    }
+                }
+            });
+        });
+    });
+</script>
 </html>

@@ -14,6 +14,9 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             "customer_type_id = ?, customer_name = ?, customer_birthday = ?, customer_gender = ?," +
             " customer_id_card= ?, customer_phone = ?, customer_email = ?,customer_address = ?  where customer_id = ?;";
     private static final String SELECT_CUSTOMER_BY_ID = "select * from customer where customer_id = ?";
+    private static final String SELECT_CUSTOMER_BY_IDCARD = "select * from customer where customer_id_card = ?";
+    private static final String SELECT_CUSTOMER_BY_PHONE = "select * from customer where customer_phone = ?";
+    private static final String SELECT_CUSTOMER_BY_EMAIL = "select * from customer where customer_email = ?";
     private static final String DELETE_CUSTOMER_SQL = "delete from customer where customer_id = ?;";
 
     private static final String SELECT_CUSTOMER_BY_NAME = "select * from customer join customer_type ct on customer.customer_type_id = ct.customer_type_id where customer_name like ? order by customer_name";
@@ -94,6 +97,120 @@ public class CustomerRepositoryImpl implements CustomerRepository {
     }
 
     @Override
+    public Customer selectByIdCard(String idCard) {
+        Customer customer = null;
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement(SELECT_CUSTOMER_BY_IDCARD);
+                statement.setString(1, idCard);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String customerId = resultSet.getString("customer_id");
+                    int customerType = resultSet.getInt("customer_type_id");
+                    String customerName = resultSet.getString("customer_name");
+                    Date customerBirthday = resultSet.getDate("customer_birthday");
+                    String customerGender = resultSet.getString("customer_gender");
+                    String customerIdCard = resultSet.getString("customer_id_card");
+                    String customerPhone = resultSet.getString("customer_phone");
+                    String customerEmail = resultSet.getString("customer_email");
+                    String customerAddress = resultSet.getString("customer_address");
+                    customer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            } finally {
+                try {
+                    resultSet.close();
+                    statement.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                DBConnection.close();
+            }
+        }
+        return customer;
+    }
+
+    @Override
+    public Customer selectByPhone(String phone) {
+        Customer customer = null;
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement(SELECT_CUSTOMER_BY_PHONE);
+                statement.setString(1, phone);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String customerId = resultSet.getString("customer_id");
+                    int customerType = resultSet.getInt("customer_type_id");
+                    String customerName = resultSet.getString("customer_name");
+                    Date customerBirthday = resultSet.getDate("customer_birthday");
+                    String customerGender = resultSet.getString("customer_gender");
+                    String customerIdCard = resultSet.getString("customer_id_card");
+                    String customerPhone = resultSet.getString("customer_phone");
+                    String customerEmail = resultSet.getString("customer_email");
+                    String customerAddress = resultSet.getString("customer_address");
+                    customer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            } finally {
+                try {
+                    resultSet.close();
+                    statement.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                DBConnection.close();
+            }
+        }
+        return customer;
+    }
+
+    @Override
+    public Customer selectByEmail(String email) {
+        Customer customer = null;
+        Connection connection = DBConnection.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        if (connection != null) {
+            try {
+                statement = connection.prepareStatement(SELECT_CUSTOMER_BY_EMAIL);
+                statement.setString(1, email);
+                resultSet = statement.executeQuery();
+                while (resultSet.next()) {
+                    String customerId = resultSet.getString("customer_id");
+                    int customerType = resultSet.getInt("customer_type_id");
+                    String customerName = resultSet.getString("customer_name");
+                    Date customerBirthday = resultSet.getDate("customer_birthday");
+                    String customerGender = resultSet.getString("customer_gender");
+                    String customerIdCard = resultSet.getString("customer_id_card");
+                    String customerPhone = resultSet.getString("customer_phone");
+                    String customerEmail = resultSet.getString("customer_email");
+                    String customerAddress = resultSet.getString("customer_address");
+                    customer = new Customer(customerId, customerType, customerName, customerBirthday, customerGender, customerIdCard, customerPhone, customerEmail, customerAddress);
+                }
+            } catch (SQLException e) {
+                printSQLException(e);
+            } finally {
+                try {
+                    resultSet.close();
+                    statement.close();
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+                DBConnection.close();
+            }
+        }
+        return customer;
+    }
+
+    @Override
     public List<Customer> selectByName(String name) throws SQLException {
         List<Customer> list = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
@@ -134,6 +251,26 @@ public class CustomerRepositoryImpl implements CustomerRepository {
             }
         }
         return list;
+    }
+
+    @Override
+    public boolean isIdExist(String id) {
+        return selectById(id) != null;
+    }
+
+    @Override
+    public boolean isIdCardExist(String idCard) {
+        return selectByIdCard(idCard) != null;
+    }
+
+    @Override
+    public boolean isPhoneExist(String phone) {
+        return selectByPhone(phone) != null;
+    }
+
+    @Override
+    public boolean isEmailExist(String email) {
+        return selectByEmail(email) != null;
     }
 
     @Override
@@ -191,7 +328,7 @@ public class CustomerRepositoryImpl implements CustomerRepository {
 
     @Override
     public boolean updateCustomer(Customer customer) throws SQLException {
-        boolean rowUpdated = false;
+        boolean rowUpdated;
         Connection connection = DBConnection.getConnection();
         PreparedStatement statement = null;
         try {

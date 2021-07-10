@@ -14,8 +14,22 @@ public interface CustomerRepository {
 
     public Customer selectById(String id);
 
+    boolean isPhoneExist(String id);
+
+    boolean isEmailExist(String idCard);
+
     public boolean deleteCustomer(String id) throws SQLException;
 
+    Customer selectByIdCard(String id);
+
+    Customer selectByPhone(String phone);
+
+    Customer selectByEmail(String email);
+
     public List<Customer> selectByName(String name) throws SQLException;
+
+    public boolean isIdExist(String id);
+
+    public boolean isIdCardExist(String idCard);
 
 }
